@@ -18,11 +18,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const CopyPlugin = require("copy-webpack-plugin");  //a partir de la versión webpack 5 ya no es necesario esto
 const Dotenv = require('dotenv-webpack');
 
-//css-minimizer-webpack-plugin ⇒ Nos ayuda a comprimir nuestros archivos finales CSS
-//terser-webpack-plugin ⇒ Permite minificar de una mejor forma
-//>npm install css-minimizer-webpack-plugin terser-webpack-plugin -D 
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 
 // Variables de entorno
 // >npm install -D dotenv-webpack
@@ -36,7 +31,6 @@ module.exports = {
     // Con path.resolve podemos decir dónde va estar la carpeta y la ubicación del mismo
     output: {
         path: path.resolve(__dirname, 'dist'),
-        clean: true, // Clean the output directory before emit. A partir de WebPack 5.20.0 + no es necesario instalar el Clean-webpack-plugin, con esta instrucción es suficiente
         // filename le pone el nombre al archivo final
         filename: '[name].[contenthash].js'
         //assetModuleFilename: 'assets/[hash][ext][query]'
@@ -87,12 +81,5 @@ module.exports = {
             filename: 'assets/[name].[contenthash].css'
         }),
         new Dotenv(),
-    ],
-    optimization: {//a partir de webpack5 ya está incluido este plugin llamado: TerserWebpackPlugin
-        minimize: true,
-        minimizer: [
-            new CssMinimizerPlugin(),
-            new TerserPlugin(), //terser-webpack-plugin ⇒ Permite minificar de una mejor forma
-        ]
-    }
+    ]
 }
