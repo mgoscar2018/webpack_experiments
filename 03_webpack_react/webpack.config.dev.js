@@ -2,8 +2,6 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 
 //Para obtener guia de autocompletar
 /** @type {import('webpack').Configuration} */  
@@ -13,18 +11,12 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         clean: true,
-        filename: 'bundle.js',
-        publicPath: "/"
-
+        filename: 'bundle.js'        
     },
     resolve: {        
-        extensions: ['.js','.jsx'],
-        alias: {
-            '@components': path.resolve(__dirname, 'src/components/'),
-            '@styles': path.resolve(__dirname,'src/styles/')
-        }
+        extensions: ['.js','.jsx']
     },
-    mode: 'production',
+    mode: 'development',
     module: {
         rules: [
             {   test: /\.(js|jsx)$/,
@@ -58,11 +50,10 @@ module.exports = {
             filename: '[name].css'
         })
     ],
-    optimization: {//Esto es sólo para producción
-        minimize: true,
-        minimizer: [
-            new CssMinimizerPlugin(),
-            new TerserPlugin(), //terser-webpack-plugin ⇒ Permite minificar de una mejor forma
-        ]
+    devServer:{ //Esto sólo para modo desarrollo
+        static: path.join(__dirname, 'dist'),
+        compress:true,
+        open: true, //para que se abra automáticamente 
+        port:3006
     }
 }
